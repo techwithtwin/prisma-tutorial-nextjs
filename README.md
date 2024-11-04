@@ -1,10 +1,25 @@
 # Prisma tutorial
 
-# Clone the initial branch to be at par with the project
+## Clone the initial branch to be at par with the project
 
 `git clone --single-branch -b initial git@github.com:techwithtwin/prisma-tutorial-nextjs.git`
 
-use these test movies to create new movies
+## I'm using PNPM
+
+you can use any package manager you prefer
+`pnpm install`
+
+## Run the development server
+
+`pnpm dev`
+
+## Styling
+
+Styling is using [chakra ui component library](https://chakra-ui.com)
+
+## Test Movies
+
+use these test movies to create new movies you can find more on the [TMDB API](https://www.themoviedb.org/)
 
 ```
 

@@ -1,5 +1,9 @@
 # Prisma tutorial
 
+# Clone the initial branch to be at par with the project
+
+`git clone --single-branch -b initial git@github.com:techwithtwin/prisma-tutorial-nextjs.git`
+
 use these test movies to create new movies
 
 ```

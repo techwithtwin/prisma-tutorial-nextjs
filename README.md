@@ -1,8 +1,100 @@
 # Prisma tutorial
 
-use these test movies to create new movies
+## Clone the initial branch to be at par with the project
 
+`git clone --single-branch -b initial git@github.com:techwithtwin/prisma-tutorial-nextjs.git`
+
+## I'm using PNPM
+
+you can use any package manager you prefer
+`pnpm install`
+
+## Run the development server
+
+`pnpm dev`
+
+## Styling
+
+Styling is using [chakra ui component library](https://chakra-ui.com)
+
+## Initializing prisma
+
+Run the following in your project root
+
+`npx prisma init`
+
+This will create a prisma directory with a schema.prisma and also a .env with a sample connection string
+
+### Create DB using the specified database type
+
+Whether using mysql or postgres go to your database management tool and create a database and come and update on your .env
+
+### Creating your schema
+
+Create schema on the schema.prisma file in the prisma folder based on your requirements
+
+### Generate Migrations
+
+Run the following command to generate migrations
+
+`npx prisma generate`
+
+Run the following command to apply the changes to the db
+
+`npx prisma migrate dev`
+
+### Seeding the DB
+
+install the ts-node utility
+`npm install -D ts-node @types/node`
+
+Add the prisma.seed field to your package.json file:
+
+```json
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.21",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
 ```
+
+Run the seed command in the CLI
+`npx prisma db seed`
+
+## Prisma best practices NEXTJS
+
+[db.ts](https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-dev-practices)
+
+```ts
+import { PrismaClient } from "@prisma/client";
+
+const prismaClientSingleton = () => {
+  return new PrismaClient();
+};
+
+declare const globalThis: {
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+} & typeof global;
+
+const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
+
+export default prisma;
+
+if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma;
+```
+
+## Test Movies
+
+use these test movies to create new movies you can find more on the [TMDB API](https://www.themoviedb.org/)
+
+```json
 
 {
         "adult": false,

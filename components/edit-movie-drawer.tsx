@@ -52,6 +52,17 @@ const EditMovieDrawer = ({ title, poster, id }: Props) => {
   });
 
   const onSubmit = async (data: EditMovieFormdata) => {
+    if (title === data.title) {
+      toast({
+        title: "Error",
+        description: "You have not made any changes",
+        status: "error",
+        position: "top",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
     setIsLoading(true);
 
     const res = await editMovieAction(data, id);
@@ -92,7 +103,7 @@ const EditMovieDrawer = ({ title, poster, id }: Props) => {
           <DrawerOverlay />
           <DrawerContent>
             <DrawerCloseButton />
-            <DrawerHeader>Edit {title} Movie</DrawerHeader>
+            <DrawerHeader>Edit &quot;{title}&quot; Movie</DrawerHeader>
 
             <DrawerBody>
               <Box h="">

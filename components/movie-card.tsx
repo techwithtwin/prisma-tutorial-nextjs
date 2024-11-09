@@ -21,7 +21,7 @@ const MovieCard = ({ id, title, poster }: Props) => {
     >
       <Image src={getImageUrl(poster)} alt={title} width={500} height={750} />
       <Stack h="100%" p={2} gap={4}>
-        <Heading fontSize="xl">{title.slice(0, 40)}...</Heading>
+        <Heading fontSize="xl">{title}</Heading>
 
         <Badge fontSize="lg" colorScheme="green" w="fit-content">
           ID: {id}

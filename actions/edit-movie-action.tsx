@@ -25,6 +25,7 @@ export async function editMovieAction(
       },
     };
   }
+
   const { title } = validatedData.data;
 
   try {

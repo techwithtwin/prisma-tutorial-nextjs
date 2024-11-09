@@ -7,7 +7,11 @@ import { marginX } from "@/utils/constants";
 import { Flex, Heading, HStack, SimpleGrid, Stack } from "@chakra-ui/react";
 
 export default async function Home() {
-  const movies = await prisma.movie.findMany();
+  const movies = await prisma.movie.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
   return (
     <Stack mx={marginX} my="3rem" gap="2rem">

@@ -27,8 +27,8 @@ const MovieCard = ({ id, title, poster }: Props) => {
           ID: {id}
         </Badge>
         <Flex justify="space-between" align="center" mt="auto">
-          <EditMovieDrawer title={title} poster={poster} />
-          <DeleteMovie title={title} poster={poster} />
+          <EditMovieDrawer title={title} poster={poster} id={id} />
+          <DeleteMovie title={title} poster={poster} id={id} />
         </Flex>
       </Stack>
     </Stack>

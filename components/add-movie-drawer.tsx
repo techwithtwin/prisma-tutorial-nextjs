@@ -24,16 +24,19 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MovieFormdata, MovieSchema } from "@/schema";
-import { addMovie } from "@/actions/add-movie";
+import { addMovieAction } from "@/actions/add-movie-action";
+import { useRouter } from "next/navigation";
 
 const AddMovieDrawer = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<MovieFormdata>({
     resolver: zodResolver(MovieSchema),
@@ -43,13 +46,7 @@ const AddMovieDrawer = () => {
   const onSubmit = async (data: MovieFormdata) => {
     setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-
-    return;
-
-    const res = await addMovie(data);
+    const res = await addMovieAction(data);
 
     setIsLoading(false);
 
@@ -57,14 +54,20 @@ const AddMovieDrawer = () => {
       title: res.status === "success" ? "Success" : "Error",
       description: res.body.message,
       status: res.status,
+      position: "top",
       duration: 3000,
       isClosable: true,
     });
 
     if (res.status === "success") {
-      onClose();
+      customClose();
+      router.refresh();
       return;
     }
+  };
+  const customClose = () => {
+    onClose();
+    reset();
   };
   return (
     <>
@@ -80,7 +83,7 @@ const AddMovieDrawer = () => {
       <Drawer
         isOpen={isOpen}
         placement="right"
-        onClose={onClose}
+        onClose={customClose}
         size="lg"
         initialFocusRef={inputRef}
       >
@@ -127,7 +130,7 @@ const AddMovieDrawer = () => {
                   </FormErrorMessage>
                 ) : (
                   <FormHelperText>
-                    Enter Url above e.g /YLyORLsYIjC0d1TFBSpJKk7piP.jpg
+                    Enter Url above e.g /qDWA7fB4cZ4sBP6YgwlxvraDHi7.jpg
                   </FormHelperText>
                 )}
               </FormControl>
@@ -146,7 +149,7 @@ const AddMovieDrawer = () => {
             </DrawerBody>
 
             <DrawerFooter>
-              <Button colorScheme="red" mr={3} onClick={onClose}>
+              <Button colorScheme="red" mr={3} onClick={customClose}>
                 Cancel
               </Button>
               <Button isLoading={isLoading} colorScheme="blue" type="submit">

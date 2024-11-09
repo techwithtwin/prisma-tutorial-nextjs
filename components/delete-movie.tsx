@@ -1,4 +1,5 @@
 "use client";
+import { deleteMovieAction } from "@/actions/delete-movie-action";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -10,17 +11,43 @@ import {
   Box,
   Button,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
 interface Props {
+  id: number;
   title: string;
   poster: string;
 }
 
-const DeleteMovie = ({ title }: Props) => {
+const DeleteMovie = ({ title, id }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement | null>(null);
+  const toast = useToast();
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    //delete movie with the given id;
+
+    const res = await deleteMovieAction(id);
+
+    toast({
+      title: res.status === "success" ? "Success" : "Error",
+      description: res.body.message,
+      status: res.status,
+      position: "top",
+      duration: 3000,
+      isClosable: true,
+    });
+
+    if (res.status === "success") {
+      router.refresh();
+    }
+
+    onClose();
+  };
   return (
     <>
       <Button onClick={onOpen} colorScheme="red" size="sm">
@@ -48,7 +75,7 @@ const DeleteMovie = ({ title }: Props) => {
             <Button ref={cancelRef} onClick={onClose}>
               No
             </Button>
-            <Button colorScheme="red" ml={3}>
+            <Button colorScheme="red" ml={3} onClick={handleDelete}>
               Yes
             </Button>
           </AlertDialogFooter>

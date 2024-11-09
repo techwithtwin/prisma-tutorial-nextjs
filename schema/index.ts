@@ -10,3 +10,9 @@ export const MovieSchema = z.object({
 });
 
 export type MovieFormdata = z.infer<typeof MovieSchema>;
+
+export const EditMovieSchema = z.object({
+  title: z.string().min(5, "Title should be more than 5 characters"),
+});
+
+export type EditMovieFormdata = z.infer<typeof EditMovieSchema>;

@@ -9,7 +9,9 @@ type AddMovieResponse = {
   };
 };
 
-export async function addMovie(data: MovieFormdata): Promise<AddMovieResponse> {
+export async function addMovieAction(
+  data: MovieFormdata
+): Promise<AddMovieResponse> {
   // using zod to validate the data
   const validatedData = MovieSchema.safeParse(data);
 

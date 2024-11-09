@@ -1,4 +1,4 @@
-import { data as moviesToSeed } from "@/utils/constants/data";
+import { data as moviesToSeed } from "../utils/constants/data";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
